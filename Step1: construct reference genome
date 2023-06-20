@@ -1,0 +1,37 @@
+############ run a whole cellranger pipeline on HPC
+
+
+Step1: construct reference genome for cellranger
+
+##download reference genome from Ensembl
+##we will need at least 2 files i) a primary assembly.fa and ii) .gtf file
+
+#!/bin/bash
+#SBATCH --job-name="cellranger_mkref_105_fullGTF"
+#SBATCH --mail-user=wittaya.hpc.cluster@gmail.com
+#SBATCH --mail-type=ALL
+#SBATCH --ntasks=10
+#SBATHC --ntasks-per-node=1
+#SBATCH --cpus-per-task=10
+#SBATCH --mem-per-cpu=30G
+#SBATCH --nodes=10
+#SBATCH --time=1-23:59:00
+#SBATCH --output=cellranger_mkref_105_fullGTF.out
+
+date
+module load cellranger
+
+cellranger mkref \
+--genome=human_ref_105_fullGTF \
+--fasta=~/directory/to/cDNA_file.fa/Homo_sapiens.GRCh38.dna.primary_assembly.fa \
+--genes=~/directory/to/gene_annotation_file.gtf/Homo_sapiens.GRCh38.105.gtf
+
+
+
+
+##end
+
+
+
+
+
