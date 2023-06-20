@@ -1,0 +1,26 @@
+Step2: run cellranger pipeline for each sample
+
+###########prepare matrix and feature of each sample from cDNA sequencing
+#!/bin/bash
+#SBATCH --job-name="cellranger_count_PMTxx_ref105_fullGTF_include_introns"
+#SBATCH --mail-user=wittaya.hpc.cluster@gmail.com
+#SBATCH --mail-type=ALL
+#SBATCH --ntasks=3
+#SBATHC --ntasks-per-node=1
+#SBATCH --cpus-per-task=10
+#SBATCH --mem-per-cpu=25G
+#SBATCH --partition=short
+#SBATCH --nodes=3
+#SBATCH --time=23:59:00
+#SBATCH --output=cellranger_count_PMTxx_ref105_fullGTF_include_introns.out
+
+date
+module load cellranger/6.1.1
+
+cellranger count --include-introns \
+--id=run_count_PMTxx_ref105_fullGTF_include_introns \
+--fastqs ~/directory/fastq/ \
+--sample=PMTxx \
+--transcriptome ~/directory/to/ref_genome/human_ref_xx_fullGTF
+
+###Then have a detailed look at the web_summary generated from cellranger pipeline and play with some parameters for example, cell number, include-introns and so on.
